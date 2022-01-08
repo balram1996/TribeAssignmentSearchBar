@@ -11,21 +11,22 @@ function Searchbar() {
     const [dateValue, setDateValue] = useState(null);
     const[showData,setShowData] = useState([]);
 
+    //fetching an api
     const getData = ()=>{
         axios.get("https://www.gov.uk/bank-holidays.json")
         .then((res)=>{
             const realData = res.data.scotland.events;
-            //console.log(realData)
             setShowData(realData);
         })
     }
 
     useEffect(()=> getData(),[])
 
+    //filter data by onclick
   function handleChange(){
   console.log(dateValue)
     const update = showData.filter((e)=>{
-        return e.date!==dateValue
+        return e.date===dateValue
         
     })
     console.log(update)
@@ -37,15 +38,15 @@ function Searchbar() {
    <>
    <div className="parent_container">
      <div className="dateSelectorDiv">
-     <input type="date" onChange={(e)=>setDateValue(e.target.value)} />
-     <button onClick={handleChange}>Find</button>
+     <input type="date" className="inputField" onChange={(e)=>setDateValue(e.target.value)} />
+     <button className="btn"onClick={handleChange}>Find</button>
      </div>
      <div className="DataDispalyDiv">
          {
              showData.map((e)=>{
                  return (
                      <>
-                     <h1>{e.title}</h1>
+                     <h1 className="text_style">{e.title}</h1>
                      </>
                  )
              })

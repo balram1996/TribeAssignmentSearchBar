@@ -1,15 +1,29 @@
 .parent_container{
     height:500px;
     width:500px;
-    border: 1px solid red;
+    background-color: rgba(159, 2, 167, 0.164);
+    justify-content: center;
+    margin-left: 30%;
+    margin-top:50px;
+    box-shadow: 2px 2px 20px 2px #888888;
 }
 .dateSelectorDiv{
     height:50px;
     width:500px;
-    border: 1px solid rgb(255, 0, 242);
+    background-color:rgba(120, 2, 126, 0.945)
 }
+
 .DataDispalyDiv{
     height:450px;
     width:500px;
-    border: 1px solid rgb(37, 37, 36);
+    overflow-y: scroll;
+}
+.btn{
+    height:23px;
+    width: 10%;
+    background-color: rgb(205, 207, 207);
+    border:none;
+}
+.text_style{
+    font-size:18px;
 }

@@ -3,47 +3,58 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./Searchbar.css"
+//import ShowData from "./ShowData";
 
 function Searchbar() {
-  useEffect(() => {
-    async function getData() {
-      let res = await axios.get("https://www.gov.uk/bank-holidays.json");
-      let objectArray = res.data.scotland.events;
-      //  console.log(objectArray);
-      setShowData(objectArray);
+
+    const [dateValue, setDateValue] = useState(null);
+    const[showData,setShowData] = useState([]);
+
+    const getData = ()=>{
+        axios.get("https://www.gov.uk/bank-holidays.json")
+        .then((res)=>{
+            const realData = res.data.scotland.events;
+            //console.log(realData)
+            setShowData(realData);
+        })
     }
-    getData();
-  }, []);
+
+    useEffect(()=> getData(),[])
 
   function handleChange(){
-   console.log(showData);
-   
+  console.log(dateValue)
+    const update = showData.filter((e)=>{
+        return e.date!==dateValue
+        
+    })
+    console.log(update)
+    setShowData(update)
   }
 
-  const [dateValue, setDateValue] = useState(null);
-  // console.log(dateValue);
-   const[showData,setShowData] = useState(null);
-  return (
-    <div className="App">
-      <h1>SELECT DATE HERE</h1>
-      {/* Date picker div */}
-      <div className="date_picker_div">
-        <DatePicker
-          dateFormat="mm/dd/yyyy"
-          showYearDropdown
-          scrollableMonthYearDropdown
-          selected={dateValue}
-          onChange={(date) => {
-            setDateValue(date);
-          }}
-        />
-        <button onClick={handleChange}>Find Holiday</button>
-      </div>
-      {/* Div for showcase our data */}
-      <div className="show_data_div">
 
-      </div>
-    </div>
+  return (
+   <>
+   <div className="parent_container">
+     <div className="dateSelectorDiv">
+     <input type="date" onChange={(e)=>setDateValue(e.target.value)} />
+     <button onClick={handleChange}>Find</button>
+     </div>
+     <div className="DataDispalyDiv">
+         {
+             showData.map((e)=>{
+                 return (
+                     <>
+                     <h1>{e.title}</h1>
+                     </>
+                 )
+             })
+         }
+     </div>
+   </div>
+   
+   </>
+    
   );
 }
 
